@@ -1,0 +1,41 @@
+# Python
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+*.swo
+*.swp
+*.swn
+*.swm
+*.swo
+*.swp
+*.swn
+*.swm
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb
+*.ipynb_checkpoints/
+
+# Snakemake
+.snakemake/
+*.snakemake/
+
+# Other
+*.out
+*.pid
+*.gz
+*.tar
+*.zip
+*.bak
+*.swp
+*.swo
+.DS_Store
+.vscode/
+.idea/
+*.iml
