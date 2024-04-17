@@ -1,0 +1,8 @@
+Building DAG of jobs...
+MissingInputException in rule all in file /Users/elimiller/Documents/1Research/python_project/etalon_detection_analysis/src/Snakefile, line 4:
+Missing input files for rule all:
+    affected files:
+        /Users/elimiller/Documents/1Research/python_project/etalon_detection_analysis/output/bs_telescope/computer2_narrowband
+        /Users/elimiller/Documents/1Research/python_project/etalon_detection_analysis/output/bs_telescope/computer1_narrowband
+        /Users/elimiller/Documents/1Research/python_project/etalon_detection_analysis/output/bs_telescope/computer1_wideband
+        /Users/elimiller/Documents/1Research/python_project/etalon_detection_analysis/output/bs_telescope/computer2_wideband

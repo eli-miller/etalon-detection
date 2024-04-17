@@ -27,6 +27,7 @@ build/
 *.snakemake/
 
 # Other
+*.png
 *.out
 *.pid
 *.gz

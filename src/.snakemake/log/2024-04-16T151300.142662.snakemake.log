@@ -1,0 +1,26 @@
+Building DAG of jobs...
+Using shell: /bin/bash
+Provided cores: 1 (use --cores to define parallelism)
+Rules claiming more threads will be scaled down.
+Job stats:
+job                     count
+--------------------  -------
+all                         1
+run_etalon_detection        4
+total                       5
+
+Select jobs to execute...
+
+[Tue Apr 16 15:13:01 2024]
+rule run_etalon_detection:
+    output: /Users/elimiller/Documents/1Research/python_project/etalon_detection_analysis/output/bs_telescope/pccomputer2_wideband
+    jobid: 4
+    reason: Missing output files: /Users/elimiller/Documents/1Research/python_project/etalon_detection_analysis/output/bs_telescope/pccomputer2_wideband
+    wildcards: computer=computer2, band=wideband
+    resources: tmpdir=/var/folders/n5/vrbn2g0n2kj2ksmdqdnhl3_40000gn/T
+
+RuleException in rule run_etalon_detection in file /Users/elimiller/Documents/1Research/python_project/etalon_detection_analysis/src/Snakefile, line 9:
+NameError: The name 'computer' is unknown in this context. Did you mean 'wildcards.computer'?, when formatting the following:
+
+        python etalon_detection.py --r "/Users/elimiller/UCB-O365/Precision Laser Diagnostics Lab-Data sharing - NNA/{computer}/output/BS_telescope/realtime_output/{band}/residuals/"         --d "/Users/elimiller/UCB-O365/Precision Laser Diagnostics Lab-Data sharing - NNA/{computer}/output/BS_telescope/realtime_output_{band}/output/"         --o "/Users/elimiller/Documents/1Research/python_project/etalon_detection_analysis/output/bs_telescope/pc{computer}_{band}"         --s "/Users/elimiller/Documents/1Research/python_project/etalon_detection_analysis/output/bs_telescope/pc{computer}_{band}"
+        

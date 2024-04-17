@@ -1,0 +1,73 @@
+Building DAG of jobs...
+Using shell: /bin/bash
+Provided cores: 4
+Rules claiming more threads will be scaled down.
+Job stats:
+job                     count
+--------------------  -------
+all                         1
+run_etalon_detection        4
+total                       5
+
+Select jobs to execute...
+
+[Tue Apr 16 16:12:33 2024]
+rule run_etalon_detection:
+    output: /Users/elimiller/Documents/1Research/python_project/etalon_detection_analysis/output/bs_telescope/computer_1_narrowband
+    jobid: 1
+    reason: Missing output files: /Users/elimiller/Documents/1Research/python_project/etalon_detection_analysis/output/bs_telescope/computer_1_narrowband
+    wildcards: computer=computer_1, band=narrowband
+    resources: tmpdir=/var/folders/n5/vrbn2g0n2kj2ksmdqdnhl3_40000gn/T
+
+
+[Tue Apr 16 16:12:33 2024]
+rule run_etalon_detection:
+    output: /Users/elimiller/Documents/1Research/python_project/etalon_detection_analysis/output/bs_telescope/computer_2_narrowband
+    jobid: 3
+    reason: Missing output files: /Users/elimiller/Documents/1Research/python_project/etalon_detection_analysis/output/bs_telescope/computer_2_narrowband
+    wildcards: computer=computer_2, band=narrowband
+    resources: tmpdir=/var/folders/n5/vrbn2g0n2kj2ksmdqdnhl3_40000gn/T
+
+
+[Tue Apr 16 16:12:33 2024]
+rule run_etalon_detection:
+    output: /Users/elimiller/Documents/1Research/python_project/etalon_detection_analysis/output/bs_telescope/computer_2_wideband
+    jobid: 4
+    reason: Missing output files: /Users/elimiller/Documents/1Research/python_project/etalon_detection_analysis/output/bs_telescope/computer_2_wideband
+    wildcards: computer=computer_2, band=wideband
+    resources: tmpdir=/var/folders/n5/vrbn2g0n2kj2ksmdqdnhl3_40000gn/T
+
+
+[Tue Apr 16 16:12:33 2024]
+rule run_etalon_detection:
+    output: /Users/elimiller/Documents/1Research/python_project/etalon_detection_analysis/output/bs_telescope/computer_1_wideband
+    jobid: 2
+    reason: Missing output files: /Users/elimiller/Documents/1Research/python_project/etalon_detection_analysis/output/bs_telescope/computer_1_wideband; Code has changed since last execution
+    wildcards: computer=computer_1, band=wideband
+    resources: tmpdir=/var/folders/n5/vrbn2g0n2kj2ksmdqdnhl3_40000gn/T
+
+[Tue Apr 16 16:12:40 2024]
+Finished job 1.
+1 of 5 steps (20%) done
+[Tue Apr 16 16:12:43 2024]
+Finished job 2.
+2 of 5 steps (40%) done
+[Tue Apr 16 16:12:45 2024]
+Finished job 3.
+3 of 5 steps (60%) done
+[Tue Apr 16 16:12:54 2024]
+Finished job 4.
+4 of 5 steps (80%) done
+Select jobs to execute...
+
+[Tue Apr 16 16:12:54 2024]
+localrule all:
+    input: /Users/elimiller/Documents/1Research/python_project/etalon_detection_analysis/output/bs_telescope/computer_1_narrowband, /Users/elimiller/Documents/1Research/python_project/etalon_detection_analysis/output/bs_telescope/computer_1_wideband, /Users/elimiller/Documents/1Research/python_project/etalon_detection_analysis/output/bs_telescope/computer_2_narrowband, /Users/elimiller/Documents/1Research/python_project/etalon_detection_analysis/output/bs_telescope/computer_2_wideband
+    jobid: 0
+    reason: Input files updated by another job: /Users/elimiller/Documents/1Research/python_project/etalon_detection_analysis/output/bs_telescope/computer_1_wideband, /Users/elimiller/Documents/1Research/python_project/etalon_detection_analysis/output/bs_telescope/computer_1_narrowband, /Users/elimiller/Documents/1Research/python_project/etalon_detection_analysis/output/bs_telescope/computer_2_narrowband, /Users/elimiller/Documents/1Research/python_project/etalon_detection_analysis/output/bs_telescope/computer_2_wideband
+    resources: tmpdir=/var/folders/n5/vrbn2g0n2kj2ksmdqdnhl3_40000gn/T
+
+[Tue Apr 16 16:12:54 2024]
+Finished job 0.
+5 of 5 steps (100%) done
+Complete log: .snakemake/log/2024-04-16T161232.586050.snakemake.log

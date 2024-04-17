@@ -1,0 +1,34 @@
+Building DAG of jobs...
+Using shell: /bin/bash
+Provided cores: 1 (use --cores to define parallelism)
+Rules claiming more threads will be scaled down.
+Job stats:
+job                     count
+--------------------  -------
+all                         1
+run_etalon_detection        1
+total                       2
+
+Select jobs to execute...
+
+[Tue Apr 16 15:23:39 2024]
+rule run_etalon_detection:
+    output: /Users/elimiller/Documents/1Research/python_project/etalon_detection_analysis/output/bs_telescope/computer1_narrowband
+    jobid: 1
+    reason: Missing output files: /Users/elimiller/Documents/1Research/python_project/etalon_detection_analysis/output/bs_telescope/computer1_narrowband
+    wildcards: computer=computer1, band=narrowband
+    resources: tmpdir=/var/folders/n5/vrbn2g0n2kj2ksmdqdnhl3_40000gn/T
+
+[Tue Apr 16 15:23:41 2024]
+Error in rule run_etalon_detection:
+    jobid: 1
+    output: /Users/elimiller/Documents/1Research/python_project/etalon_detection_analysis/output/bs_telescope/computer1_narrowband
+    shell:
+        
+        python etalon_detection.py --r "/Users/elimiller/UCB-O365/Precision Laser Diagnostics Lab-Data sharing - NNA/computer1/output/BS_telescope/realtime_output_narrowband/residuals/"         --d "/Users/elimiller/UCB-O365/Precision Laser Diagnostics Lab-Data sharing - NNA/computer1/output/BS_telescope/realtime_output_narrowband/output/"         --o "/Users/elimiller/Documents/1Research/python_project/etalon_detection_analysis/output/bsS_telescope/pccomputer1_narrowband"         --s "/Users/elimiller/Documents/1Research/python_project/etalon_detection_analysis/output/bs_telescope/pccomputer1_narrowband"
+        
+        (one of the commands exited with non-zero exit code; note that snakemake uses bash strict mode!)
+
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: .snakemake/log/2024-04-16T152339.390564.snakemake.log

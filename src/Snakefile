@@ -1,0 +1,20 @@
+COMPUTERS = ["computer_1", "computer_2"]
+BANDS = ["narrowband", "wideband"]
+N_P2P =
+
+rule all:
+    input:
+        expand("/Users/elimiller/Documents/1Research/python_project/etalon_detection_analysis/output/bs_telescope/{computer}_{band}_top_{n}_P2P",
+               computer=COMPUTERS, band=BANDS, n=N_P2P)
+
+rule run_etalon_detection:
+    output:
+        directory("/Users/elimiller/Documents/1Research/python_project/etalon_detection_analysis/output/bs_telescope/{computer}_{band}_top_{n}_P2P")
+    shell:
+        """
+        python etalon_detection.py --r "/Users/elimiller/UCB-O365/Precision Laser Diagnostics Lab-Data sharing - NNA/{wildcards.computer}/output/BS_telescope/realtime_output_{wildcards.band}/residuals/" \
+        --d "/Users/elimiller/UCB-O365/Precision Laser Diagnostics Lab-Data sharing - NNA/{wildcards.computer}/output/BS_telescope/realtime_output_{wildcards.band}/output/" \
+        --o "/Users/elimiller/Documents/1Research/python_project/etalon_detection_analysis/output/bs_telescope/{wildcards.computer}_{wildcards.band}_top_{wildcards.n}_P2P" \
+        --s "/Users/elimiller/Documents/1Research/python_project/etalon_detection_analysis/output/bs_telescope/{wildcards.computer}_{wildcards.band}_top_{wildcards.n}_P2P" \
+        --n {wildcards.n}
+        """
