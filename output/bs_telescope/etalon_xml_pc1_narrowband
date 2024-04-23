@@ -1,0 +1,66 @@
+<Data>
+  <AboveEC>
+    <etalons>[[135, 154],[282, 300],[971, 979],[8615, 8671]]</etalons>
+    <bl>93</bl>
+  </AboveEC>
+  <AboveNorthDock>
+    <etalons>[[971, 979],[8624, 8690]]</etalons>
+    <bl>285</bl>
+  </AboveNorthDock>
+  <AboveNorthEastDock>
+    <etalons>[[231, 271],[975, 979],[8594, 8629]]</etalons>
+    <bl>63</bl>
+  </AboveNorthEastDock>
+  <AboveWestDock>
+    <etalons>[[279, 285],[438, 442],[971, 979],[8619, 8661]]</etalons>
+    <bl>152</bl>
+  </AboveWestDock>
+  <LandBridge>
+    <etalons>[[199, 270],[489, 493],[545, 551],[971, 979],[8577, 8657]]</etalons>
+    <bl>153</bl>
+  </LandBridge>
+  <NorthDock>
+    <etalons>[[199, 278],[514, 518],[586, 598],[798, 808],[971, 980],[8556, 8605]]</etalons>
+    <bl>152</bl>
+  </NorthDock>
+  <NorthEastBracket>
+    <etalons>[[231, 270],[450, 453],[516, 521],[973, 979],[8599, 8661]]</etalons>
+    <bl>152</bl>
+  </NorthEastBracket>
+  <P01>
+    <etalons>[[307, 314],[971, 979]]</etalons>
+    <bl>155</bl>
+  </P01>
+  <P02>
+    <etalons>[[312, 325],[971, 979],[8623, 8668]]</etalons>
+    <bl>152</bl>
+  </P02>
+  <P03>
+    <etalons>[[202, 244],[971, 980],[8595, 8695]]</etalons>
+    <bl>152</bl>
+  </P03>
+  <P04>
+    <etalons>[[231, 272],[971, 979],[8604, 8676]]</etalons>
+    <bl>152</bl>
+  </P04>
+  <P05>
+    <etalons>[[319, 325],[975, 979],[8586, 8700]]</etalons>
+    <bl>237</bl>
+  </P05>
+  <P06>
+    <etalons>[[207, 211],[971, 978],[8590, 8672]]</etalons>
+    <bl>93</bl>
+  </P06>
+  <SouthBracket>
+    <etalons>[[214, 275],[975, 979],[8616, 8676]]</etalons>
+    <bl>93</bl>
+  </SouthBracket>
+  <SouthDock>
+    <etalons>[[231, 273],[975, 979],[8597, 8623]]</etalons>
+    <bl>93</bl>
+  </SouthDock>
+  <SouthTerrace>
+    <etalons>[[231, 266],[359, 365],[482, 486],[972, 979]]</etalons>
+    <bl>152</bl>
+  </SouthTerrace>
+</Data>

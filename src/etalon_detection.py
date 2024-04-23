@@ -215,6 +215,7 @@ def plot_n_peaks_vs_distance_threshold(props, label=None):
     for distance_threshold in distance_thresholds:
         merged_peaks = merge_edges(props["edges"], distance_threshold)
         num_peaks.append(len(merged_peaks))
+        num_peaks.append(len(merged_peaks))
 
     plt.plot(distance_thresholds, num_peaks, label=label)
     plt.ylabel("Number of Notches")
@@ -524,7 +525,7 @@ def main():
         plt.figure(fig)
         plt.legend()
         plt.xlim([0, 1000])
-        plt.show()
+        # plt.show()
 
         if save_fig_path is not None:
             plt.savefig(

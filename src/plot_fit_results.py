@@ -7,12 +7,8 @@ import xml.etree.ElementTree as ET
 import argparse
 import tqdm
 
-sys.path.append(
-    "/Users/elimiller/Documents/1Research/python_project/pldspectrapy_hidden"
-)
-import td_support as td
 
-sys.path.append("/Users/elimiller/Documents/1Research/python_project/NNA_data_analysis")
+from pldspectrapy import td_support as td
 import nna_tools
 
 plt.style.use("eli_default")
@@ -131,21 +127,34 @@ def plot_notches(axs, weight):
 def setup_args():
     parser = argparse.ArgumentParser(description="Plot fit results.")
     parser.add_argument(
-        "--r", type=str, help="Path to the results directory.", required=True
+        "-r",
+        "--results",
+        type=str,
+        help="Path to the results directory.",
+        required=True,
     )
     parser.add_argument(
-        "--c", type=str, help="Path to the config file.", required=False, default=None
-    )
-    parser.add_argument(
-        "--s", type=str, help="Path to save plots.", required=False, default=None
-    )
-    parser.add_argument(
-        "--grayscale",
-        "-gs",
-        action="store_true",
-        help="Plot residuals in grayscale.",
+        "-c",
+        "--config",
+        type=str,
+        help="Path to the config file.",
         required=False,
-        default=True,
+        default=None,
+    )
+    parser.add_argument(
+        "-s",
+        "--save",
+        type=str,
+        help="Path to save plots.",
+        required=False,
+        default=None,
+    )
+    parser.add_argument(
+        "-g",
+        "--grayscale",
+        action="store_true",
+        help="Plot in grayscale. Disabled by default.",
+        default=False,
     )
 
     return parser.parse_args()
@@ -158,16 +167,15 @@ def main():
     """
     args = setup_args()
 
-    results_path = args.r
-    config_paths = args.c
-    save_path = args.s
+    results_path = args.results
+    config_paths = args.config
+    save_path = args.save
     plot_gray = args.grayscale
 
-    if config_paths is None:
-        config_paths = glob.glob(os.path.join(results_path, "..", "*config*.xml"))
-    print("Config paths:")
-    print(config_paths)
-    print("\n")
+    # Read in config file to get etalon and bl info. RealTime not saving correctly so can't use RealTime.log file.
+    config_path = config_paths
+    retro_values = {}
+    root = parse_xml(config_path)
 
     output_data_path = os.path.join(results_path, "output", "*RealTime.log")
 
@@ -175,16 +183,10 @@ def main():
         output_data_path, correct_pathlength=False, drop_na=False
     )  # new retros don't have all info yet.
 
-    # Read in config file to get etalon and bl info. RealTime not saving correctly so can't use RealTime.log file.
-    config_path = config_paths
-
-    retro_values = {}
-    root = parse_xml(config_path)
-
     # get retro names from root xml file
-    retros = root.find("spectrapy").find("retros")
 
-    for retro_name in tqdm.tqdm(output_data.ch4retro.unique()):
+    # for retro_name in tqdm.tqdm(output_data.ch4retro.unique()):
+    for retro_name in output_data.ch4retro.unique():
         # Catch the case where the retro name is a float (nan)
         if type(retro_name) == float:
             print(f"Skipping retro_name: {retro_name}")
@@ -193,8 +195,12 @@ def main():
         filenames = output_data[output_data["ch4retro"] == retro_name]["fileNames"]
         retro_values[retro_name] = extract_bl_and_etalons(root, retro_name)
 
-        bl = int(retro_values[retro_name]["BL"])
-        etalons = retro_values[retro_name]["Etalons"]
+        try:
+            bl = int(retro_values[retro_name]["BL"])
+            etalons = retro_values[retro_name]["Etalons"]
+        except TypeError:
+            print(f"Skipping retro_name: {retro_name}")
+            continue
 
         residual_data = {}
         y_td_data = {}
@@ -204,13 +210,26 @@ def main():
 
         for filename in filenames:
             filename = str(filename)
+
+            residual_path = os.path.join(
+                results_path, "residuals", filename + "_residual.csv"
+            )
+            cepstrum_path = os.path.join(results_path, "y_td", f"{filename}_y_td.csv")
+
+            if not os.path.exists(residual_path):
+                print(f"Skipping file: {filename}. The residual file does not exist.")
+                continue
+            if not os.path.exists(cepstrum_path):
+                print(f"Skipping file: {filename}. The cepstrum file does not exist.")
+                continue
+
             residual_data[filename] = np.loadtxt(
-                os.path.join(results_path, "residuals", filename + "_residual.csv"),
+                residual_path,
                 delimiter=",",
             )
 
             y_td_data[filename] = np.loadtxt(
-                os.path.join(results_path, "y_td", f"{filename}_y_td.csv"),
+                cepstrum_path,
                 delimiter=",",
             )
 
