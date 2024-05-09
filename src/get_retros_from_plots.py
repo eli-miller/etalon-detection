@@ -1,4 +1,4 @@
-from etalon_detection import beam_from_log_files
+from pldspectrapy import beam_from_log_files
 import glob
 import os
 import argparse
@@ -9,20 +9,24 @@ Additional functionality is added to optionally take in a list of files within t
 """
 
 parser = argparse.ArgumentParser(
-    description='Get beam names from fit plots and log files. Chose either directory of plots or a list of plots to process.')
-parser.add_argument('--plots_path', type=str,
-                    help='Path to directory of fit plots.')
-parser.add_argument('--log_file_path', type=str,
-                    help='Path to directory of log files.')
-parser.add_argument('--file_list', type=str,
-                    help='text file with List of files to process. If not provided, all files in plots_path will be processed.',
-                    required=False, default=None)
-parser.add_argument('--save_path', type=str,
-                    help='Path to save beam_dict.txt file to.', required=False,
-                    default=None)
-
-
-
+    description="Get beam names from fit plots and log files. Chose either directory of plots or a list of plots to process."
+)
+parser.add_argument("--plots_path", type=str, help="Path to directory of fit plots.")
+parser.add_argument("--log_file_path", type=str, help="Path to directory of log files.")
+parser.add_argument(
+    "--file_list",
+    type=str,
+    help="text file with List of files to process. If not provided, all files in plots_path will be processed.",
+    required=False,
+    default=None,
+)
+parser.add_argument(
+    "--save_path",
+    type=str,
+    help="Path to save beam_dict.txt file to.",
+    required=False,
+    default=None,
+)
 
 
 args = parser.parse_args()
@@ -34,7 +38,7 @@ file_list = args.file_list
 print(file_list)
 
 if file_list is not None:
-    with open(file_list, 'r') as f:
+    with open(file_list, "r") as f:
         files = f.read().splitlines()
 
 else:

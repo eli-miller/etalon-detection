@@ -1,4 +1,3 @@
-import ast
 import glob
 import os
 
@@ -8,10 +7,11 @@ import pandas as pd
 from scipy import signal
 from tqdm import tqdm
 import argparse
-import ast
 
 # TODO: Refactor this to be a module
 import sys
+
+from pldspectrapy import beam_from_log_files
 
 sys.path.append(
     "/Users/elimiller/Documents/1Research/python_project/NNA_data_analysis/nna_tools.py"
@@ -341,43 +341,6 @@ def get_peak_edges(
     }
 
     return merged_edges, properties
-
-
-def beam_from_log_files(log_file_path, filename):
-    """
-    Extracts the beam from a log file and returns the beam name.
-
-    Parameters
-    ----------
-    log_file_path : str
-        Path to the log file. Must contain .log and .cor files.
-    filename : str
-        Name of the log file. No extension.
-
-    Returns
-    -------
-    beam : Beam
-        Beam name.
-    """
-
-    # Check that both the .log (and .cor?) files exist
-    if not os.path.exists(os.path.join(log_file_path, filename + ".log")):
-        raise FileNotFoundError(f"Log file {filename}.log not found in {log_file_path}")
-
-    # Read the log file
-    log_file = os.path.join(log_file_path, filename + ".log")
-    with open(log_file, "r") as f:
-        log = f.readlines()
-
-        # Extract the beam parameters from the log file
-        # Example last line of log file:
-        # notes = <beam 'AboveNorthEastDock'(dist 2177.56)(agl nan)(coor nan, nan, nan)(ned nan, nan, nan)(pointing -42.1570, -4.3420)>
-
-        # NOTE this is a very fragile implementation that is relying on the last line's format and the existence of the single quotes.
-        last_line = log[-1]
-        beam_name = last_line.split("'")[1]
-
-    return beam_name
 
 
 def initialize_parser():
