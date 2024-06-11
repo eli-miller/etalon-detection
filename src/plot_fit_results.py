@@ -6,6 +6,7 @@ import sys
 import xml.etree.ElementTree as ET
 import argparse
 from tqdm import tqdm
+from pandas import to_datetime
 
 
 from pldspectrapy import td_support as td
@@ -81,14 +82,16 @@ def plot_residuals(
     filename,
     plot_gray=False,
     plot_legend=False,
+    number_of_files=None,
 ):
     # TODO: normalize residuals in plot
     axs[0].plot(y_td_data[filename], label=filename)
 
     if plot_gray:
+        # TODO: add a legend that shows how many files correspond to each gray level
         axs[1].plot(
             residual_data[filename],
-            alpha=0.1,
+            alpha=1 / number_of_files,
             color="gray",
         )
     else:
@@ -200,6 +203,20 @@ def setup_args():
         help="Plot legend.",
         default=False,
     )
+    parser.add_argument(
+        "-sd",
+        "--start_date",
+        type=str,
+        help="Start date for analysis.",
+        required=False,
+    )
+    parser.add_argument(
+        "-ed",
+        "--end_date",
+        type=str,
+        help="End date for analysis.",
+        required=False,
+    )
 
     return parser.parse_args()
 
@@ -217,6 +234,8 @@ def main():
     plot_gray = args.grayscale
     p2p_threshold = args.p2p
     plot_legend = args.legend
+    start_date = args.start_date
+    end_date = args.end_date
 
     # Read in config file to get etalon and bl info. RealTime not saving correctly so can't use RealTime.log file.
     config_path = config_paths
@@ -228,6 +247,11 @@ def main():
     output_data = nna_tools.create_dcs_dataframe(
         output_data_path, correct_pathlength=False, drop_na=False
     )  # new retros don't have all info yet.
+
+    if start_date is not None:
+        output_data = output_data[output_data.index >= to_datetime(start_date)]
+    if end_date is not None:
+        output_data = output_data[output_data.index <= to_datetime(end_date)]
 
     # Filter by peak to peak value
     output_data = output_data[output_data["dataP2P"] > p2p_threshold]
@@ -261,6 +285,8 @@ def main():
         # add the inset axes to the axs object. it is an array so we can't append
         axs = np.append(axs, inset)
 
+        number_of_files = len(filenames)
+        print("Plotting residuals for retro:", retro_name)
         for filename in tqdm(filenames):
             filename = str(filename)
 
@@ -294,6 +320,7 @@ def main():
                 filename,
                 plot_gray=plot_gray,
                 plot_legend=plot_legend,
+                number_of_files=number_of_files,
             )
 
         if len(residual_data) == 0:
