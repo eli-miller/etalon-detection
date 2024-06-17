@@ -11,7 +11,7 @@ import argparse
 # TODO: Refactor this to be a module
 import sys
 
-from pldspectrapy import beam_from_log_files
+from pldspectrapy.misc_tools import beam_from_log_files
 
 sys.path.append(
     "/Users/elimiller/Documents/1Research/python_project/NNA_data_analysis/nna_tools.py"
@@ -201,8 +201,8 @@ def plot_etalon_detection(
     plt.ylim(-0.01, 0.01)
 
     # Add major ticks every 100 and minor (without labels) every 25
-    plt.gca().xaxis.set_major_locator(plt.MultipleLocator(100))
-    plt.gca().xaxis.set_minor_locator(plt.MultipleLocator(25))
+    # plt.gca().xaxis.set_major_locator(plt.MultipleLocator(100))
+    # plt.gca().xaxis.set_minor_locator(plt.MultipleLocator(25))
 
     plt.title(title)
 
@@ -270,6 +270,46 @@ def extract_etalon(summary_df, retro, etalon_loc):
         return None
 
 
+def widen_etalons(edges, width_multiplier):
+    """
+    Widen etalons bases on a width multiplier and then merge any now-overlapping edges.
+
+
+    Parameters
+    ----------
+    edges: list of tuples
+        List of all edges of etalons
+    width_multiplier: float
+        Widening factor. Applied to all etalons
+
+    Returns
+    -------
+    widened_etalons: list of tuples
+        List of widened etalons
+    """
+
+    edges_array = np.array(edges)
+
+    left_edges = edges_array[:, 0]
+    right_edges = edges_array[:, 1]
+
+    widths = right_edges - left_edges
+
+    new_left = np.floor(left_edges - (width_multiplier * widths / 2)).astype(int)
+
+    new_right = np.ceil(right_edges + (width_multiplier * widths / 2)).astype(int)
+
+    new_left[new_left < 0] = 0
+    # new_right[new_right > len(residual)] = len(residual)
+
+    widened_etalons_array = np.vstack([new_left, new_right]).T
+
+    # Turn back into list of tuples for now.
+    widened_etalons = [tuple(row) for row in widened_etalons_array.tolist()]
+
+    return merge_overlapping_edges(widened_etalons)
+
+
 def get_peak_edges(
     residual,
     noise_multiplier=10,
@@ -277,6 +317,7 @@ def get_peak_edges(
     distance_threshold=35,
     recursive_iters=1,
     noise_floor_method="max",
+    width_multiplier=1.0,
 ):
     """Find the edges of peaks in a residual signal.
 
@@ -320,6 +361,8 @@ def get_peak_edges(
     )
 
     merged_edges = merge_edges(edges, distance_threshold=distance_threshold)
+
+    merged_edges = widen_etalons(merged_edges, width_multiplier=width_multiplier)
 
     # Turn first detected etalon into baseline
     baseline = merged_edges[0][1]
